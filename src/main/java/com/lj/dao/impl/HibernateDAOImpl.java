@@ -415,9 +415,12 @@ public abstract class HibernateDAOImpl<T extends AbstractBaseModel> extends Hibe
 				query.setMaxResults(pageSize);
 			}
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("totalPages", totalPages);
-			map.put("totalCount", totalCount);
-			map.put("datas", makeList(query, HashMap.class, alias));
+			Map<String, Object> pageMap = new HashMap<String, Object>();
+			pageMap.put("total", totalCount);
+			pageMap.put("pageNum", pageNo);
+			pageMap.put("pageSize", pageSize);
+			map.put("page", pageMap);
+			map.put("list", makeList(query, HashMap.class, alias));
 			return map;
 		} finally {
 			if (null != session)
